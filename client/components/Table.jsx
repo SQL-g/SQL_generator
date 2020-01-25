@@ -6,13 +6,24 @@ export class Table extends Component {
         super(props);
         this.state = {
             rows: 0,
+            data: [],
         };
         this.handleClick = this.handleClick.bind(this);
     }
 
     handleClick() {
         const rows = this.state.rows + 1;
-        this.setState({ rows });
+        const data = this.state.data.slice();
+        data.push({
+            name: '',
+            type: '',
+            isUnique: '',
+            isRequired: '',
+            default: '',
+        });
+        console.log('data array:', data);
+        this.setState({ rows, data });
+        console.log(this.state);
     }
 
     render() {
