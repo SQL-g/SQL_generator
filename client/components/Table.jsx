@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import { Row } from './Row'
 
 export class Table extends Component {
