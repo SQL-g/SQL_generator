@@ -1,54 +1,80 @@
 import React, { Component } from 'react';
-
 import { Row } from './Row'
 
 export class Table extends Component {
-    constructor() {
-        super();
-        this.state = {row: 0};
-        this.addField = this.addField.bind(this);
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+        };
+        this.handleClick = this.handleClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    addField() {
-        const newRow = this.state.row + 1;
-        this.setState({row: newRow}, () => 
-        console.log(this.state.row));
+    handleClick() {
+        this.setState({ data: [...this.state.data, {
+            name: '',
+            type: 'integer',
+            isUnique: false,
+            isRequired: true,
+            default: '',
+        }]});
+    }
+
+    handleChange(index, property, value) {
+        console.log(index, property, value);
+        console.log(JSON.stringify(this.state.data.slice(0, index)));
+        this.setState({ data: [
+            ...this.state.data.slice(0, index),
+            { ...this.state.data[index], [property]: value },
+            ...this.state.data.slice(index + 1),
+        ]}, () => { console.log(JSON.stringify(this.state)); });
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        console.log(this.state.data);
+        this.setState({ data: [] });
     }
 
     render() {
-        const rowArray = [];
-        for (let i = 0; i < this.state.row; i++) {
-            rowArray.push(<Row />);
-        }
+        console.log('rendered');
         return (
             <div>
-                <table>
-                    <tbody >
-                    <tr className="row">
-                     <td className="row">name</td>
-                     <td className="row">type</td>
-                     <td className="row">is required</td>
-                     <td className="row">is unique</td>
-                     <td className="row">default</td>
-                    </tr>
-                    <tr className="row">
-                     <td className="row">id</td>
-                     <td className="row">serial</td>
-                     <td className="row">yes</td>
-                     <td className="row">yes</td>
-                     <td className="row">blank</td>
-                    </tr>           
-                    </tbody>
-                </table>
-
-                {rowArray}
-
-                <div className="addField" onClick={this.addField}>
-                    <button>ADD FIELD</button>
-                </div>
-                <div>
-                    <button>SUBMIT</button>
-                </div>
+                <h1>Table</h1>
+                <form onSubmit={this.handleSubmit}>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Is Required</th>
+                                <th>Is Unique</th>
+                                <th>Default</th>
+                            </tr>
+                            <tr>
+                                <td>_id</td>
+                                <td>
+                                    <select disabled>
+                                        <option value="serial">serial</option>
+                                    </select>
+                                </td>
+                                <td><input type="checkbox" checked={true} disabled /></td>
+                                <td><input type="checkbox" checked={true} disabled /></td>
+                                <td><input type="text" disabled /></td>
+                            </tr>           
+                            {
+                                this.state.data.map(
+                                    (row, i) => <Row key={i} { ...row } idx={i} handleChange={this.handleChange} />
+                                )
+                            }
+                        </tbody>
+                    </table>
+                    <button onClick={this.handleClick} type='button'>Add field</button>
+                    <br/>
+                    <button type='submit'>Submit</button>
+                </form>
             </div>
         )
     }
