@@ -23,7 +23,6 @@ export class MainContainer extends Component {
                 <h1>Main Container</h1>
                 <button onClick={this.createTable}>CREATE TABLE</button>
                 {tableArray}
-                <CodeSnippet />
                
             </div>
         )

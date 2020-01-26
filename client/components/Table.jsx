@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 
 import { Row } from './Row'
 
+import { CodeSnippet } from './CodeSnippet' 
+
 export class Table extends Component {
     constructor() {
         super();
-        this.state = {row: 0};
+        this.state = {
+            row: 0,
+            box: 0
+        };
         this.addField = this.addField.bind(this);
+        this.addOutPut = this.addOutPut.bind(this)
     }
 
     addField() {
@@ -15,10 +21,21 @@ export class Table extends Component {
         console.log(this.state.row));
     }
 
+    addOutPut() {
+        if(this.state.box < 1) {
+            const outPutBox =  this.state.box + 1;
+            this.setState({box: outPutBox})
+          }
+        }
+
     render() {
         const rowArray = [];
         for (let i = 0; i < this.state.row; i++) {
             rowArray.push(<Row />);
+        }
+        const box = [];
+        for (let i = 0; i < this.state.box; i++) {
+            box.push(<CodeSnippet />)
         }
         return (
             <div>
@@ -46,10 +63,11 @@ export class Table extends Component {
                 <div className="addField" onClick={this.addField}>
                     <button>ADD FIELD</button>
                 </div>
-                <div>
-                    <button>SUBMIT</button>
+                <div className="addOutPut" onClick= {this.addOutPut}>
+                <button> Output Box</button>
                 </div>
-            </div>
+                {box}
+         </div>
         )
     }
 }
