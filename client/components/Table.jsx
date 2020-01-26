@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { Row } from './Row'
 
+import { CodeSnippet } from './CodeSnippet' 
+
 export class Table extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [],
+            box: 0,
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.addOutPut = this.addOutPut.bind(this);
     }
 
     handleClick() {
@@ -38,8 +42,19 @@ export class Table extends Component {
         this.setState({ data: [] });
     }
 
+    addOutPut() {
+        if(this.state.box < 1) {
+            const outPutBox =  this.state.box + 1;
+            this.setState({box: outPutBox})
+          }
+        }
+
     render() {
         console.log('rendered');
+        const box = [];
+        for (let i = 0; i < this.state.box; i++) {
+            box.push(<CodeSnippet />)
+        }
         return (
             <div>
                 <h1>Table</h1>
@@ -75,6 +90,10 @@ export class Table extends Component {
                     <br/>
                     <button type='submit'>Submit</button>
                 </form>
+                <div className="addOutPut" onClick= {this.addOutPut}>
+                <button> Output Box</button>
+                </div>
+                {box}
             </div>
         )
     }
