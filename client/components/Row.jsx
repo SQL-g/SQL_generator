@@ -3,22 +3,15 @@ import React, { Component } from 'react';
 export class Row extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            wasUpdated: true,
-        }
-        this.handleChange = this.handleChange.bind(this)
+        this.handleChange = this.handleChange.bind(this);
     }
     
     handleChange(e) {
-        e.preventDefault();
-
         this.props.handleChange(
             this.props.idx,
             e.target.name,
             e.target.type === 'checkbox' ? e.target.checked : e.target.value,
         );
-
-        // this.props.handleBool(this.props.idx, e.target.checked);
     }
 
     componentDidUpdate() {

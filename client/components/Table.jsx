@@ -6,11 +6,9 @@ export class Table extends Component {
         super(props);
         this.state = {
             data: [],
-            bools: [],
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleChange=this.handleChange.bind(this);
-        this.handleBool=this.handleBool.bind(this);
     }
 
     handleClick() {
@@ -21,7 +19,6 @@ export class Table extends Component {
             isRequired: true,
             default: '',
         }]});
-        // this.setState({ bools: [...this.state.bools, true]})
     }
 
     handleChange(index, property, value) {
@@ -31,14 +28,6 @@ export class Table extends Component {
             ...this.state.data.slice(0, index),
             { ...this.state.data[index], [property]: value },
             ...this.state.data.slice(index + 1),
-        ]}, () => { console.log(JSON.stringify(this.state)); });
-    }
-
-    handleBool(index, val) {
-        this.setState({ bools: [
-            ...this.state.bools.slice(0, index),
-            val,
-            ...this.state.bools.slice(index + 1),
         ]}, () => { console.log(JSON.stringify(this.state)); });
     }
 
@@ -62,11 +51,6 @@ export class Table extends Component {
                                     (row, i) => <Row key={i} { ...row } idx={i} handleChange={this.handleChange} />
                                 )
                             }
-                            {/* {
-                                this.state.bools.map((val, i) => (
-                                    <tr><td><input type="checkbox" name="isRequired" checked={val} onChange={(e) => this.handleBool(i, e.target.checked)} /></td></tr>
-                                ))
-                            } */}
                         </tbody>
                     </table>
                     <button onClick={this.handleClick} type='button'>Add field</button>
