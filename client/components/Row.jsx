@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 export class Row extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            wasUpdated: true,
+        }
         this.handleChange = this.handleChange.bind(this)
     }
     
@@ -14,13 +17,16 @@ export class Row extends Component {
             e.target.name,
             e.target.type === 'checkbox' ? e.target.checked : e.target.value,
         );
+
+        // this.props.handleBool(this.props.idx, e.target.checked);
     }
 
     componentDidUpdate() {
-        console.log('UPDATE', JSON.stringify(this.props))
+        console.log('UPDATE', JSON.stringify(this.props));
     }
 
     render() {
+        console.log('isRequired: ', this.props.isRequired);
         return (
             <tr>
                 <td><input type="text" name="name" value={this.props.name} onChange={this.handleChange} required /></td>

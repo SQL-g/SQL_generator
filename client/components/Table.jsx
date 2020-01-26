@@ -14,14 +14,14 @@ export class Table extends Component {
     }
 
     handleClick() {
-        // this.setState({ data: [...this.state.data, {
-        //     name: '',
-        //     type: 'integer',
-        //     isUnique: false,
-        //     isRequired: true,
-        //     default: '',
-        // }]});
-        this.setState({ bools: [...this.state.bools, true]})
+        this.setState({ data: [...this.state.data, {
+            name: '',
+            type: 'integer',
+            isUnique: false,
+            isRequired: true,
+            default: '',
+        }]});
+        // this.setState({ bools: [...this.state.bools, true]})
     }
 
     handleChange(index, property, value) {
@@ -33,6 +33,7 @@ export class Table extends Component {
             ...this.state.data.slice(index + 1),
         ]}, () => { console.log(JSON.stringify(this.state)); });
     }
+
     handleBool(index, val) {
         this.setState({ bools: [
             ...this.state.bools.slice(0, index),
@@ -42,6 +43,7 @@ export class Table extends Component {
     }
 
     render() {
+        console.log('rendered');
         return (
             <div>
                 <h1>Table</h1>
@@ -60,11 +62,11 @@ export class Table extends Component {
                                     (row, i) => <Row key={i} { ...row } idx={i} handleChange={this.handleChange} />
                                 )
                             }
-                            {
+                            {/* {
                                 this.state.bools.map((val, i) => (
                                     <tr><td><input type="checkbox" name="isRequired" checked={val} onChange={(e) => this.handleBool(i, e.target.checked)} /></td></tr>
                                 ))
-                            }
+                            } */}
                         </tbody>
                     </table>
                     <button onClick={this.handleClick} type='button'>Add field</button>
