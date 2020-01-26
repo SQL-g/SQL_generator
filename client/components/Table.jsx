@@ -8,7 +8,8 @@ export class Table extends Component {
             data: [],
         };
         this.handleClick = this.handleClick.bind(this);
-        this.handleChange=this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleClick() {
@@ -31,12 +32,18 @@ export class Table extends Component {
         ]}, () => { console.log(JSON.stringify(this.state)); });
     }
 
+    handleSubmit(e) {
+        e.preventDefault();
+        console.log(this.state.data);
+        this.setState({ data: [] });
+    }
+
     render() {
         console.log('rendered');
         return (
             <div>
                 <h1>Table</h1>
-                <form>
+                <form onSubmit={this.handleSubmit}>
                     <table>
                         <tbody>
                             <tr>
