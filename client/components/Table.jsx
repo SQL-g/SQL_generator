@@ -8,6 +8,7 @@ export class Table extends Component {
         super(props);
         this.state = {
             data: [],
+            box: 0,
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
