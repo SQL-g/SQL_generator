@@ -53,6 +53,17 @@ export class Table extends Component {
                                 <th>Is Unique</th>
                                 <th>Default</th>
                             </tr>
+                            <tr>
+                                <td>_id</td>
+                                <td>
+                                    <select disabled>
+                                        <option value="serial">serial</option>
+                                    </select>
+                                </td>
+                                <td><input type="checkbox" checked={true} disabled /></td>
+                                <td><input type="checkbox" checked={true} disabled /></td>
+                                <td><input type="text" disabled /></td>
+                            </tr>           
                             {
                                 this.state.data.map(
                                     (row, i) => <Row key={i} { ...row } idx={i} handleChange={this.handleChange} />
