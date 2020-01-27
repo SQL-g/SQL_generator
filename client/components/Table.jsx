@@ -7,10 +7,9 @@ export class Table extends Component {
         super(props);
         this.state = {
             data: [],
-            tableName: 'Planets',
-            box: 0,
-            codeSnippet: '',
         };
+        this.wasSubmitted = false;
+        this.tableSchema = '';
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,14 +32,16 @@ export class Table extends Component {
             ...this.state.data.slice(0, index),
             { ...this.state.data[index], [property]: value },
             ...this.state.data.slice(index + 1),
-        ]}, () => { console.log(JSON.stringify(this.state)); });
+        ]}, () => { console.log(JSON.stringify(this.state)); this.props.handleTableChange(this.props.idx, this.state.data); });
     }
 
     handleSubmit(e) {
         e.preventDefault();
         console.log(this.state.data);
+        this.wasSubmitted = true;
+
         const { data } = this.state;
-        let tableSchema = `CREATE TABLE ${this.state.tableName} (\n\t"_id" serial PRIMARY KEY`;
+        let tableSchema = `CREATE TABLE ${this.props.tableName} (\n\t"_id" serial PRIMARY KEY`;
         data.forEach(field => {
             tableSchema += `,\n\t"${field.name}" ${field.type}`;
             if (field.isRequired) tableSchema += ' NOT NULL';
@@ -49,57 +50,59 @@ export class Table extends Component {
         });
         tableSchema += '\n);';
         console.log(tableSchema);
-        //this.setState({ data: [] });
-        if(this.state.box < 1) {
-            const outPutBox =  this.state.box + 1;
-            this.setState({box: outPutBox})
-        }
-        this.setState({codeSnippet: tableSchema});
+        this.tableSchema = tableSchema;
+        this.setState({ data: [] });
     }
 
     render() {
-        //console.log('rendered');
-        const box = [];
-        for (let i = 0; i < this.state.box; i++) {
-            box.push(<CodeSnippet codeSnippet={this.state.codeSnippet}/>)
-        }
+        console.log('rendered');
         return (
             <div id="tableContainer">
-                <h2>{this.props.tableName}</h2>
-                <form onSubmit={this.handleSubmit}>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Is Required</th>
-                                <th>Is Unique</th>
-                                <th>Default</th>
-                            </tr>
-                            <tr>
-                                <td>_id</td>
-                                <td>
-                                    <select disabled>
-                                        <option value="serial">serial</option>
-                                    </select>
-                                </td>
-                                <td><input type="checkbox" checked={true} disabled /></td>
-                                <td><input type="checkbox" checked={true} disabled /></td>
-                                <td><input type="text" disabled /></td>
-                            </tr>           
-                            {
-                                this.state.data.map(
-                                    (row, i) => <Row key={i} { ...row } idx={i} handleChange={this.handleChange} />
-                                )
-                            }
-                        </tbody>
-                    </table>
-                    <br></br>
-                    <button onClick={this.handleClick} type='button'>Add field</button>
-                    <button type='submit' id="submitButton">Submit</button>
-                </form>
-                <br></br>
-                {box}
+                {
+                    !this.wasSubmitted && 
+                    <div>
+                        <h1>{this.props.tableName}</h1>
+                        {/* <form onSubmit={this.handleSubmit}> */}
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Is Required</th>
+                                        <th>Is Unique</th>
+                                        <th>Default</th>
+                                    </tr>
+                                    <tr>
+                                        <td>_id</td>
+                                        <td>
+                                            <select disabled>
+                                                <option value="serial">serial</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="checkbox" checked={true} disabled /></td>
+                                        <td><input type="checkbox" checked={true} disabled /></td>
+                                        <td><input type="text" disabled /></td>
+                                    </tr>           
+                                    {
+                                        this.state.data.map(
+                                            (row, i) => <Row key={i} { ...row } idx={i} handleChange={this.handleChange} />
+                                        )
+                                    }
+                                </tbody>
+                            </table>
+                            <button onClick={this.handleClick} type='button'>Add field</button>
+                            {/* <br/> */}
+                            {/* <button type='submit'>Submit</button> */}
+                        {/* </form> */}
+                    </div>
+                }
+                {/* {
+                    this.wasSubmitted && 
+                    <div>
+                        <h1>Your SQL Schema</h1>
+                        <textarea cols="80" rows="30" value={this.tableSchema} readOnly></textarea>
+                    </div>
+                } */}
             </div>
         )
     }
