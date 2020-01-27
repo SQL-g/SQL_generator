@@ -32,7 +32,7 @@ export class Table extends Component {
             ...this.state.data.slice(0, index),
             { ...this.state.data[index], [property]: value },
             ...this.state.data.slice(index + 1),
-        ]}, () => { console.log(JSON.stringify(this.state)); });
+        ]}, () => { console.log(JSON.stringify(this.state)); this.props.handleTableChange(this.props.idx, this.state.data); });
     }
 
     handleSubmit(e) {
