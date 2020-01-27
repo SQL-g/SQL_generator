@@ -71,10 +71,10 @@ export class MainContainer extends Component {
 
     render() { 
         return (
-            <div>
+            <div className='rowC'>
                 <div>
                     <form onSubmit={this.createTable}>
-                        <label>Create Table: </label>
+                        <label id="tableLabel">Create Table: </label>
                         <input type="text" placeholder="Name of your table" value={this.state.tableName} onChange={this.handleChange} required/>
                         <button id="tableButton">+</button>
                     </form>
@@ -89,7 +89,7 @@ export class MainContainer extends Component {
                 </div>
                 {
                     this.state.isSubmitted && 
-                    <div>
+                    <div id="codeSnippetBox">
                         <h1>Your SQL Schema</h1>
                         <textarea cols="80" rows={this.textareaRows} value={this.codeSnippet} readOnly></textarea>
                     </div>

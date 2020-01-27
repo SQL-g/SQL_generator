@@ -64,7 +64,8 @@ export class Table extends Component {
                             }
                         </tbody>
                     </table>
-                    <button onClick={this.handleClick} type='button'>Add field</button>
+                    <label id="fieldLabel">Add Field</label>
+                    <button onClick={this.handleClick} type='button' id="addFieldButton">+</button>
             </div>
         )
     }
