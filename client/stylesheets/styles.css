@@ -5,3 +5,9 @@ body {
 th, td {
     border: 1px solid black;
 }
+
+.mainContainer {
+    display: flex;
+    width: 70%;
+    margin: 32px auto;
+}

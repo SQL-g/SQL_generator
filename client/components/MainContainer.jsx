@@ -6,27 +6,35 @@ export class MainContainer extends Component {
     constructor() {
         super();
         this.state = {
-            tables: 0,
+            tables: [],
+            tableName: '',
         };
         this.createTable = this.createTable.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    createTable() {
-        this.setState({ tables: this.state.tables + 1 });
+    createTable(e) {
+        e.preventDefault();
+        this.setState({ tables: [...this.state.tables, this.state.tableName], tableName: '' });
     }
 
-    render() {
-        const tableArray = [];
-        for (let i = 0; i < this.state.tables; i += 1) {
-            tableArray.push(<Table />);
-        }
-        
+    handleChange(e) {
+        this.setState({ tableName: e.target.value })
+    }
+
+    render() { 
         return (
             <div>
-                <h1>Main Container</h1>
-                <button onClick={this.createTable}>CREATE TABLE</button>
-                {tableArray}
-               
+                <form onSubmit={this.createTable}>
+                    <label>Table Name:</label>
+                    <input type="text" value={this.state.tableName} onChange={this.handleChange} required/>
+                    <button>CREATE TABLE</button>
+                </form>
+                {
+                    this.state.tables.map(
+                        tableName => <Table key={tableName} tableName={tableName}/>
+                    )
+                }
             </div>
         )
     }
