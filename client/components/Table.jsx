@@ -90,7 +90,9 @@ export class Table extends Component {
                                     }
                                 </tbody>
                             </table>
-                            <button onClick={this.handleClick} type='button'>Add field</button>
+                            <br></br>
+                            <label id="fieldLabel">Add Field</label>
+                            <button onClick={this.handleClick} type='button' id="addFieldButton">+</button>
                             {/* <br/> */}
                             {/* <button type='submit'>Submit</button> */}
                         {/* </form> */}
@@ -103,6 +105,7 @@ export class Table extends Component {
                         <textarea cols="80" rows="30" value={this.tableSchema} readOnly></textarea>
                     </div>
                 } */}
+                <br></br>
             </div>
         )
     }

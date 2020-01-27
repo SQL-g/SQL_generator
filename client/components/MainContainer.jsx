@@ -65,15 +65,14 @@ export class MainContainer extends Component {
 
     render() { 
         return (
-            <div>
-                {
-                    !this.state.isSubmitted && 
+            <div className='rowC'>
                     <div>
                         <form onSubmit={this.createTable}>
-                            <label>Create Table: </label>
+                            <label id="tableLabel">Create Table: </label>
                             <input type="text" placeholder="Name of your table" value={this.state.tableName} onChange={this.handleChange} required/>
                             <button id="tableButton">+</button>
                         </form>
+                        <br></br>
                         <form onSubmit={this.handleSubmit}>
                             {
                                 this.state.tables.map(
@@ -83,11 +82,10 @@ export class MainContainer extends Component {
                             <button id="submitButton">Submit</button>
                         </form>
                     </div>
-                }
                 {
                     this.state.isSubmitted && 
-                    <div>
-                        <h1>Your SQL Schema</h1>
+                    <div id="codeSnippetBox">
+                        <h2>Your SQL Schema</h2>
                         <textarea cols="80" rows="30" value={this.codeSnippet} readOnly></textarea>
                     </div>
                 }
