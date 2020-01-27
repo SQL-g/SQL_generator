@@ -26,8 +26,8 @@ export class Table extends Component {
     }
 
     handleChange(index, property, value) {
-        console.log(index, property, value);
-        console.log(JSON.stringify(this.state.data.slice(0, index)));
+        //console.log(index, property, value);
+        //console.log(JSON.stringify(this.state.data.slice(0, index)));
         this.setState({ data: [
             ...this.state.data.slice(0, index),
             { ...this.state.data[index], [property]: value },
@@ -57,7 +57,7 @@ export class Table extends Component {
     render() {
         console.log('rendered');
         return (
-            <div className="mainContainer">
+            <div id="tableContainer">
                 {
                     !this.wasSubmitted && 
                     <div>

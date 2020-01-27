@@ -70,9 +70,9 @@ export class MainContainer extends Component {
                     !this.state.isSubmitted && 
                     <div>
                         <form onSubmit={this.createTable}>
-                            <label>Table Name:</label>
-                            <input type="text" value={this.state.tableName} onChange={this.handleChange} required/>
-                            <button>CREATE TABLE</button>
+                            <label>Create Table: </label>
+                            <input type="text" placeholder="Name of your table" value={this.state.tableName} onChange={this.handleChange} required/>
+                            <button id="tableButton">+</button>
                         </form>
                         <form onSubmit={this.handleSubmit}>
                             {
@@ -80,7 +80,7 @@ export class MainContainer extends Component {
                                     (tableName, i) => <Table key={tableName} tableName={tableName} idx={i} handleTableChange={this.handleTableChange} />
                                 )
                             }
-                            <button>Submit</button>
+                            <button id="submitButton">Submit</button>
                         </form>
                     </div>
                 }
