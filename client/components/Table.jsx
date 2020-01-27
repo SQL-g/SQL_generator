@@ -8,17 +8,14 @@ export class Table extends Component {
         this.state = {
             data: [],
         };
-        this.wasSubmitted = false;
-        this.tableSchema = '';
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleClick() {
         this.setState({ data: [...this.state.data, {
             name: '',
-            type: 'integer',
+            type: 'varchar',
             isUnique: false,
             isRequired: true,
             default: '',
@@ -35,74 +32,39 @@ export class Table extends Component {
         ]}, () => { console.log(JSON.stringify(this.state)); this.props.handleTableChange(this.props.idx, this.state.data); });
     }
 
-    handleSubmit(e) {
-        e.preventDefault();
-        console.log(this.state.data);
-        this.wasSubmitted = true;
-
-        const { data } = this.state;
-        let tableSchema = `CREATE TABLE ${this.props.tableName} (\n\t"_id" serial PRIMARY KEY`;
-        data.forEach(field => {
-            tableSchema += `,\n\t"${field.name}" ${field.type}`;
-            if (field.isRequired) tableSchema += ' NOT NULL';
-            if (field.isUnique)  tableSchema += ' UNIQUE';
-            if (field.default) tableSchema += ` DEFAULT "${field.default}"`;
-        });
-        tableSchema += '\n);';
-        console.log(tableSchema);
-        this.tableSchema = tableSchema;
-        this.setState({ data: [] });
-    }
-
     render() {
         console.log('rendered');
         return (
             <div id="tableContainer">
-                {
-                    !this.wasSubmitted && 
-                    <div>
-                        <h1>{this.props.tableName}</h1>
-                        {/* <form onSubmit={this.handleSubmit}> */}
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Type</th>
-                                        <th>Is Required</th>
-                                        <th>Is Unique</th>
-                                        <th>Default</th>
-                                    </tr>
-                                    <tr>
-                                        <td>_id</td>
-                                        <td>
-                                            <select disabled>
-                                                <option value="serial">serial</option>
-                                            </select>
-                                        </td>
-                                        <td><input type="checkbox" checked={true} disabled /></td>
-                                        <td><input type="checkbox" checked={true} disabled /></td>
-                                        <td><input type="text" disabled /></td>
-                                    </tr>           
-                                    {
-                                        this.state.data.map(
-                                            (row, i) => <Row key={i} { ...row } idx={i} handleChange={this.handleChange} />
-                                        )
-                                    }
-                                </tbody>
-                            </table>
-                            <button onClick={this.handleClick} type='button'>Add field</button>
-                            {/* <br/> */}
-                            {/* <button type='submit'>Submit</button> */}
-                        {/* </form> */}
-                    </div>
-                }
-                {/* {
-                    this.wasSubmitted && 
-                    <div>
-                        <h1>Your SQL Schema</h1>
-                        <textarea cols="80" rows="30" value={this.tableSchema} readOnly></textarea>
-                    </div>
-                } */}
+                <h1>{this.props.tableName}</h1>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Is Required</th>
+                                <th>Is Unique</th>
+                                <th>Default</th>
+                            </tr>
+                            <tr>
+                                <td>_id</td>
+                                <td>
+                                    <select disabled>
+                                        <option value="serial">serial</option>
+                                    </select>
+                                </td>
+                                <td><input type="checkbox" checked={true} disabled /></td>
+                                <td><input type="checkbox" checked={true} disabled /></td>
+                                <td><input type="text" disabled /></td>
+                            </tr>           
+                            {
+                                this.state.data.map(
+                                    (row, i) => <Row key={i} { ...row } idx={i} handleChange={this.handleChange} />
+                                )
+                            }
+                        </tbody>
+                    </table>
+                    <button onClick={this.handleClick} type='button'>Add field</button>
             </div>
         )
     }
