@@ -6,8 +6,13 @@ export class App extends Component {
     render() {
         return (
             <div>
-                <HeaderContainer />
-                <MainContainer />
+                <div id="headerContainer">
+                    <HeaderContainer />
+                </div>
+                <br></br>
+                <div id="mainContainer">
+                    <MainContainer />
+                </div>
             </div>
         )
     }

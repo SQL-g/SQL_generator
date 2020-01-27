@@ -9,11 +9,11 @@ export class Table extends Component {
             data: [],
             tableName: 'Planets',
             box: 0,
+            codeSnippet: '',
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.addOutPut = this.addOutPut.bind(this);
     }
 
     handleClick() {
@@ -27,8 +27,8 @@ export class Table extends Component {
     }
 
     handleChange(index, property, value) {
-        console.log(index, property, value);
-        console.log(JSON.stringify(this.state.data.slice(0, index)));
+        //console.log(index, property, value);
+        //console.log(JSON.stringify(this.state.data.slice(0, index)));
         this.setState({ data: [
             ...this.state.data.slice(0, index),
             { ...this.state.data[index], [property]: value },
@@ -49,25 +49,23 @@ export class Table extends Component {
         });
         tableSchema += '\n);';
         console.log(tableSchema);
-        this.setState({ data: [] });
-    }
-
-    addOutPut() {
+        //this.setState({ data: [] });
         if(this.state.box < 1) {
             const outPutBox =  this.state.box + 1;
             this.setState({box: outPutBox})
-          }
         }
+        this.setState({codeSnippet: tableSchema});
+    }
 
     render() {
-        console.log('rendered');
+        //console.log('rendered');
         const box = [];
         for (let i = 0; i < this.state.box; i++) {
-            box.push(<CodeSnippet />)
+            box.push(<CodeSnippet codeSnippet={this.state.codeSnippet}/>)
         }
         return (
-            <div>
-                <h1>Table</h1>
+            <div id="tableContainer">
+                <h2>{this.props.tableName}</h2>
                 <form onSubmit={this.handleSubmit}>
                     <table>
                         <tbody>
@@ -96,13 +94,11 @@ export class Table extends Component {
                             }
                         </tbody>
                     </table>
+                    <br></br>
                     <button onClick={this.handleClick} type='button'>Add field</button>
-                    <br/>
-                    <button type='submit'>Submit</button>
+                    <button type='submit' id="submitButton">Submit</button>
                 </form>
-                <div className="addOutPut" onClick= {this.addOutPut}>
-                <button> Output Box</button>
-                </div>
+                <br></br>
                 {box}
             </div>
         )

@@ -9,10 +9,9 @@ export class CodeSnippet extends Component {
     render() {
         return (
             <div>
-                <h1>CodeSnippet</h1>
+                <h2>SQL Code Snippet</h2>
                 <label htmlFor="" type="text">
-               
-                    <textarea></textarea>
+                    <textarea id="codeSnippetBox">{this.props.codeSnippet}</textarea>
                 </label>
             </div>
             
