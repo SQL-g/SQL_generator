@@ -15,12 +15,14 @@ export class MainContainer extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTableChange = this.handleTableChange.bind(this);
+        this.tableCreated = false;
         this.codeSnippet = '';
         this.textareaRows = 0;
     }
 
     createTable(e) {
         e.preventDefault();
+        this.tableCreated = true;
         this.setState({ tables: [...this.state.tables, this.state.tableName],
             tableName: '',
             data: [...this.state.data, []],
@@ -84,7 +86,10 @@ export class MainContainer extends Component {
                                 (tableName, i) => <Table key={tableName} tableName={tableName} idx={i} handleTableChange={this.handleTableChange} />
                             )
                         }
-                        <button id="submitButton">Submit</button>
+                        {
+                            this.tableCreated && 
+                            <button id="submitButton">Submit</button>
+                        }
                     </form>
                 </div>
                 {

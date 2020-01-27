@@ -31,6 +31,7 @@ export class Row extends Component {
                 <td>
                     <input type={this.props.type === 'integer' ? 'number' : 'text'} name="default" value={this.props.default} onChange={this.handleChange} />
                 </td>
+                <td className="noBorder"><button type='button' id="addFieldButton" onClick={() => this.props.deleteRow(this.props.idx)}>-</button></td>
             </tr>
         )
     }

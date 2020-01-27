@@ -10,6 +10,7 @@ export class Table extends Component {
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.deleteRow = this.deleteRow.bind(this);
     }
 
     handleClick() {
@@ -30,6 +31,12 @@ export class Table extends Component {
             { ...this.state.data[index], [property]: value },
             ...this.state.data.slice(index + 1),
         ]}, () => { console.log(JSON.stringify(this.state)); this.props.handleTableChange(this.props.idx, this.state.data); });
+    }
+
+    deleteRow(index) {
+        const data = this.state.data.slice();
+        data.splice(index, 1);
+        this.setState({ data }, () => this.props.handleTableChange(this.props.idx, this.state.data));
     }
 
     render() {
@@ -59,7 +66,7 @@ export class Table extends Component {
                             </tr>           
                             {
                                 this.state.data.map(
-                                    (row, i) => <Row key={i} { ...row } idx={i} handleChange={this.handleChange} />
+                                    (row, i) => <Row key={i} { ...row } idx={i} handleChange={this.handleChange} deleteRow={this.deleteRow}/>
                                 )
                             }
                         </tbody>

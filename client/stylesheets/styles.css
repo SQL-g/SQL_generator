@@ -115,3 +115,15 @@ table {
     width: 300px;
     height: 100px;
 }
+
+button:focus, input:focus, textarea:focus {
+    outline: none;
+}
+
+.noBorder {
+    border: none;
+}
+
+textarea {
+    font-size: 1.3rem;
+}
