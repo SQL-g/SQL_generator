@@ -62,7 +62,7 @@ export class Table extends Component {
                     !this.wasSubmitted && 
                     <div>
                         <h1>{this.props.tableName}</h1>
-                        <form onSubmit={this.handleSubmit}>
+                        {/* <form onSubmit={this.handleSubmit}> */}
                             <table>
                                 <tbody>
                                     <tr>
@@ -91,18 +91,18 @@ export class Table extends Component {
                                 </tbody>
                             </table>
                             <button onClick={this.handleClick} type='button'>Add field</button>
-                            <br/>
-                            <button type='submit'>Submit</button>
-                        </form>
+                            {/* <br/> */}
+                            {/* <button type='submit'>Submit</button> */}
+                        {/* </form> */}
                     </div>
                 }
-                {
+                {/* {
                     this.wasSubmitted && 
                     <div>
                         <h1>Your SQL Schema</h1>
                         <textarea cols="80" rows="30" value={this.tableSchema} readOnly></textarea>
                     </div>
-                }
+                } */}
             </div>
         )
     }

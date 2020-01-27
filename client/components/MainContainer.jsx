@@ -8,9 +8,12 @@ export class MainContainer extends Component {
         this.state = {
             tables: [],
             tableName: '',
+            isSubmitted: false,
+            data: [],
         };
         this.createTable = this.createTable.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     createTable(e) {
@@ -22,18 +25,38 @@ export class MainContainer extends Component {
         this.setState({ tableName: e.target.value })
     }
 
+    handleSubmit(e) {
+        e.preventDefault();
+        this.setState({ isSubmitted: true });
+    }
+
     render() { 
         return (
             <div>
-                <form onSubmit={this.createTable}>
-                    <label>Table Name:</label>
-                    <input type="text" value={this.state.tableName} onChange={this.handleChange} required/>
-                    <button>CREATE TABLE</button>
-                </form>
                 {
-                    this.state.tables.map(
-                        tableName => <Table key={tableName} tableName={tableName}/>
-                    )
+                    !this.state.isSubmitted && 
+                    <div>
+                        <form onSubmit={this.createTable}>
+                            <label>Table Name:</label>
+                            <input type="text" value={this.state.tableName} onChange={this.handleChange} required/>
+                            <button>CREATE TABLE</button>
+                        </form>
+                        <form onSubmit={this.handleSubmit}>
+                            {
+                                this.state.tables.map(
+                                    tableName => <Table key={tableName} tableName={tableName}/>
+                                )
+                            }
+                            <button>Submit</button>
+                        </form>
+                    </div>
+                }
+                {
+                    this.state.isSubmitted && 
+                    <div>
+                        <h1>Your SQL Schema</h1>
+                        <textarea cols="80" rows="30" value={'jjj'} readOnly></textarea>
+                    </div>
                 }
             </div>
         )
