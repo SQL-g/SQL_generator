@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Row } from './Row'
-
 import { CodeSnippet } from './CodeSnippet' 
 
 export class Table extends Component {
@@ -8,6 +7,7 @@ export class Table extends Component {
         super(props);
         this.state = {
             data: [],
+            tableName: 'Planets',
             box: 0,
         };
         this.handleClick = this.handleClick.bind(this);
@@ -39,6 +39,16 @@ export class Table extends Component {
     handleSubmit(e) {
         e.preventDefault();
         console.log(this.state.data);
+        const { data } = this.state;
+        let tableSchema = `CREATE TABLE ${this.state.tableName} (\n\t"_id" serial PRIMARY KEY`;
+        data.forEach(field => {
+            tableSchema += `,\n\t"${field.name}" ${field.type}`;
+            if (field.isRequired) tableSchema += ' NOT NULL';
+            if (field.isUnique)  tableSchema += ' UNIQUE';
+            if (field.default) tableSchema += ` DEFAULT "${field.default}"`;
+        });
+        tableSchema += '\n);';
+        console.log(tableSchema);
         this.setState({ data: [] });
     }
 
