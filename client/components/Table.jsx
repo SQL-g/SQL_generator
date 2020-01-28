@@ -22,9 +22,8 @@ export class Table extends Component {
         }]});
     }
 
+    // this function will be invoked in the handle change of the row - so that the state of the whole table will be updated
     handleChange(index, property, value) {
-        //console.log(index, property, value);
-        //console.log(JSON.stringify(this.state.data.slice(0, index)));
         this.setState({ data: [
             ...this.state.data.slice(0, index),
             { ...this.state.data[index], [property]: value },

@@ -21,6 +21,9 @@ export class MainContainer extends Component {
 
     createTable(e) {
         e.preventDefault();
+        // on creation of the new table
+        // 1. add the tableName to the tables Array
+        // 2. add an empty array to the end of data array - each array in the this.state.data represents the Table 
         this.setState({ tables: [...this.state.tables, this.state.tableName],
             tableName: '',
             data: [...this.state.data, []],
@@ -28,16 +31,19 @@ export class MainContainer extends Component {
     }
 
     handleChange(e) {
+        // change the table name on input
         this.setState({ tableName: e.target.value })
     }
 
     handleSubmit(e) {
         e.preventDefault();
 
+        // create the string for the code snippet on submission
         let codeSnippet = '';
         this.textareaRows = 0;
 
         const { data: arrayOfTables } = this.state;
+        // each element in the array of Tables is an array where each element is an object that represents the field
         arrayOfTables.forEach((table, i) => {
             let tableSchema = `CREATE TABLE ${this.state.tables[i]} (\n\t"_id" serial PRIMARY KEY`;
             table.forEach(field => {
@@ -61,6 +67,8 @@ export class MainContainer extends Component {
         this.setState({ isSubmitted: true });
     }
 
+    // this function is invoked in the Table component inside of the other handleChange function
+    // it allows to have updated data from all tables in this component - to use it for the codeSnippet on submission
     handleTableChange(index, table) {
         this.setState({ data: [
             ...this.state.data.slice(0, index),
