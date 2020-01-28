@@ -1,7 +1,117 @@
 body {
-    background: gray;
+    background: rgb(83, 83, 83);
+    color: rgb(0, 183, 255);
+    min-width: 800px;
 }
 
 th, td {
-    border: 1px solid black;
+    border: 2px solid white;
+    padding: 5px;
+    font-size: 17px;
+    text-align: center;
+}
+
+#headerContainer {
+    padding-left: 20px;
+}
+
+#mainContainer {
+    padding-left: 20px;
+}
+
+.rowC {
+    display: inline-block;
+}
+
+@media screen and (min-width: 800px) {
+    .rowC {
+        display: flex; 
+        flex-direction: row;
+    }
+
+    #codeSnippetBox {
+        width: 300px;
+        height: 100px;
+        margin-left: 50px;
+    }
+}
+
+#logo {
+    max-width: 150px;
+    position: absolute;
+    top: 30px;
+    left: 450px;
+}
+
+#tableButton {
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    font-size: 15px;
+    border-radius: 50%;
+    margin-left: 10px;
+    background-color: teal;
+    color: white;
+}
+
+#tableButton:hover {
+    background-color: white;
+    color: teal;
+}
+
+input {
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+#tableLabel {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#tableContainer {
+    font-size: 15px;
+}
+
+table { 
+    width: 550px; 
+    border-collapse: collapse; 
+    border-spacing: 0px;
+}
+
+#fieldLabel {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#addFieldButton {
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    font-size: 15px;
+    border-radius: 50%;
+    margin-left: 10px;
+    background-color: teal;
+    color: white;
+}
+
+#addFieldButton:hover {
+    background-color: white;
+    color: teal;
+}
+
+#submitButton {
+    background-color: teal;
+    color: white;
+    font-size: 15px;
+}
+
+#submitButton:hover {
+    background-color: white;
+    color: teal;
+}
+
+#codeSnippetBox {
+    width: 300px;
+    height: 100px;
 }

@@ -7,19 +7,15 @@ export class Table extends Component {
         super(props);
         this.state = {
             data: [],
-            tableName: 'Planets',
-            box: 0,
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.addOutPut = this.addOutPut.bind(this);
     }
 
     handleClick() {
         this.setState({ data: [...this.state.data, {
             name: '',
-            type: 'integer',
+            type: 'varchar',
             isUnique: false,
             isRequired: true,
             default: '',
@@ -27,48 +23,20 @@ export class Table extends Component {
     }
 
     handleChange(index, property, value) {
-        console.log(index, property, value);
-        console.log(JSON.stringify(this.state.data.slice(0, index)));
+        //console.log(index, property, value);
+        //console.log(JSON.stringify(this.state.data.slice(0, index)));
         this.setState({ data: [
             ...this.state.data.slice(0, index),
             { ...this.state.data[index], [property]: value },
             ...this.state.data.slice(index + 1),
-        ]}, () => { console.log(JSON.stringify(this.state)); });
+        ]}, () => { console.log(JSON.stringify(this.state)); this.props.handleTableChange(this.props.idx, this.state.data); });
     }
-
-    handleSubmit(e) {
-        e.preventDefault();
-        console.log(this.state.data);
-        const { data } = this.state;
-        let tableSchema = `CREATE TABLE ${this.state.tableName} (\n\t"_id" serial PRIMARY KEY`;
-        data.forEach(field => {
-            tableSchema += `,\n\t"${field.name}" ${field.type}`;
-            if (field.isRequired) tableSchema += ' NOT NULL';
-            if (field.isUnique)  tableSchema += ' UNIQUE';
-            if (field.default) tableSchema += ` DEFAULT "${field.default}"`;
-        });
-        tableSchema += '\n);';
-        console.log(tableSchema);
-        this.setState({ data: [] });
-    }
-
-    addOutPut() {
-        if(this.state.box < 1) {
-            const outPutBox =  this.state.box + 1;
-            this.setState({box: outPutBox})
-          }
-        }
 
     render() {
         console.log('rendered');
-        const box = [];
-        for (let i = 0; i < this.state.box; i++) {
-            box.push(<CodeSnippet />)
-        }
         return (
-            <div>
-                <h1>Table</h1>
-                <form onSubmit={this.handleSubmit}>
+            <div id="tableContainer">
+                <h1>{this.props.tableName}</h1>
                     <table>
                         <tbody>
                             <tr>
@@ -96,14 +64,8 @@ export class Table extends Component {
                             }
                         </tbody>
                     </table>
-                    <button onClick={this.handleClick} type='button'>Add field</button>
-                    <br/>
-                    <button type='submit'>Submit</button>
-                </form>
-                <div className="addOutPut" onClick= {this.addOutPut}>
-                <button> Output Box</button>
-                </div>
-                {box}
+                    <label id="fieldLabel">Add Field</label>
+                    <button onClick={this.handleClick} type='button' id="addFieldButton">+</button>
             </div>
         )
     }
