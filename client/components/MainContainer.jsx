@@ -15,12 +15,14 @@ export class MainContainer extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTableChange = this.handleTableChange.bind(this);
+        this.tableCreated = false;
         this.codeSnippet = '';
         this.textareaRows = 0;
     }
 
     createTable(e) {
         e.preventDefault();
+        this.tableCreated = true;
         this.setState({ tables: [...this.state.tables, this.state.tableName],
             tableName: '',
             data: [...this.state.data, []],
@@ -42,7 +44,7 @@ export class MainContainer extends Component {
             let tableSchema = `CREATE TABLE ${this.state.tables[i]} (\n\t"_id" serial PRIMARY KEY`;
             table.forEach(field => {
                 this.textareaRows += 1;
-                tableSchema += `,\n\t"${field.name}" ${field.type}`;
+                tableSchema += `,\n\t${field.name} ${field.type}`;
                 if (field.isRequired) tableSchema += ' NOT NULL';
                 if (field.isUnique)  tableSchema += ' UNIQUE';
                 if (field.default) {
@@ -70,12 +72,13 @@ export class MainContainer extends Component {
     }
 
     render() { 
+        console.log('Main Container rendered');
         return (
-            <div className='rowC'>
+            <div className='rowC' id="mainContainer">
                 <div>
                     <form onSubmit={this.createTable}>
                         <label id="tableLabel">Create Table: </label>
-                        <input type="text" placeholder="Name of your table" value={this.state.tableName} onChange={this.handleChange} required/>
+                        <input key="TableName Input"type="text" placeholder="Name of your table" value={this.state.tableName} onChange={this.handleChange} required/>
                         <button id="tableButton">+</button>
                     </form>
                     <form onSubmit={this.handleSubmit}>
@@ -84,7 +87,10 @@ export class MainContainer extends Component {
                                 (tableName, i) => <Table key={tableName} tableName={tableName} idx={i} handleTableChange={this.handleTableChange} />
                             )
                         }
-                        <button id="submitButton">Submit</button>
+                        {
+                            this.tableCreated && 
+                            <button id="submitButton">Submit</button>
+                        }
                     </form>
                 </div>
                 {

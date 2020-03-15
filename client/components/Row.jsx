@@ -1,6 +1,23 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
-export class Row extends Component {
+const Button = styled.button`
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    font-size: 15px;
+    border-radius: 50%;
+    margin-left: 10px;
+    background-color: red;
+    color: white;
+
+    &:hover {
+        background-color: white;
+        color: red;
+    }
+`;
+
+export class Row extends React.PureComponent {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
@@ -31,6 +48,7 @@ export class Row extends Component {
                 <td>
                     <input type={this.props.type === 'integer' ? 'number' : 'text'} name="default" value={this.props.default} onChange={this.handleChange} />
                 </td>
+                <td className="noBorder"><Button onClick={() => this.props.deleteRow(this.props.idx)}>-</Button></td>
             </tr>
         )
     }

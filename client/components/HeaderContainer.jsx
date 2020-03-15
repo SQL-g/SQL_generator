@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export class HeaderContainer extends Component {
     render() {
         return (
-            <div>
+            <div id="headerContainer">
                 <h1>SQL Generator</h1>
                 <h3>Generate code for your SQL table in seconds!</h3>
                 <h3>Just copy and paste into your own code. Easy.</h3>
